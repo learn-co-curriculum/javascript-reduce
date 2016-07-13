@@ -44,7 +44,7 @@ loop has finished, we return our `totalPrice` result:
 function getTotalAmountForProducts(products) {
   let totalPrice = 0;
 
-  products.forEach(function (product) {
+  products.forEach(product => {
     if (product.discount > .5) {
       totalPrice += product.price;
     }
@@ -71,7 +71,7 @@ that part is abstracted away. The callback has to return a value that is then se
 function getTotalAmountForProducts(products, callback) {
   let totalPrice = 0;
 
-  products.forEach(function (product) {
+  products.forEach(product => {
     totalPrice = callback(totalPrice, product);
   });
 
@@ -81,9 +81,8 @@ function getTotalAmountForProducts(products, callback) {
 function callback(totalPrice, product) {
   if (product.discount > .5) {
     return totalPrice + product.price;
-  } else {
-    return totalPrice;
   }
+  return totalPrice;
 }
 
 console.log(getTotalAmountForProducts(products, callback)); // prints 25.5
@@ -100,9 +99,8 @@ control of the logic, it should be straight-forward to change:
 function callback(totalPrice, product) {
   if (product.price > 7) {
     return totalPrice + product.price;
-  } else {
-    return totalPrice;
   }
+  return totalPrice;
 }
 
 console.log(getTotalAmountForProducts(products, callback)); // prints 22
@@ -118,7 +116,7 @@ do that for her by passing in an *initial value* to our function, instead of aut
 function getTotalAmountForProducts(products, callback, initialValue) {
   let totalPrice = initialValue;
 
-  products.forEach(function (product) {
+  products.forEach(product => {
     totalPrice = callback(totalPrice, product);
   });
 
@@ -128,9 +126,8 @@ function getTotalAmountForProducts(products, callback, initialValue) {
 function callback(totalPrice, product) {
   if (product.price > 7) {
     return totalPrice + product.price;
-  } else {
-    return totalPrice;
   }
+  return totalPrice;
 }
 
 console.log(getTotalAmountForProducts(products, callback, 0)); // still prints 22. Yeah!
@@ -144,7 +141,7 @@ and change some other variable names to make it more generic:
 function reduce(collection, callback, initialValue) {
   let result = initialValue;
 
-  collection.forEach(function (product) {
+  collection.forEach(product => {
     result = callback(result, product);
   });
 
@@ -159,7 +156,7 @@ to the callback. The callback doesn't *have* to use these arguments, but they're
 function reduce(collection, callback, initialValue) {
   let result = initialValue;
 
-  collection.forEach(function (product, index) {
+  collection.forEach((product, index) => {
     result = callback(result, product, index, collection);
   });
 
